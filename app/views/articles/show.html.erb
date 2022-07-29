@@ -1,0 +1,19 @@
+
+<h1>Article specific</h1>
+<p><%=@article.title %></p>
+<p><%=@article.body %></p>
+<p><%=@article.status%></p>
+
+
+<%= @article.comments.each do |comment| %>
+    <% unless comment.archived? %> 
+        <%=render "comments/comment" ,comment:comment%> 
+        <li> 
+        <%=link_to "Edit Comment", edit_article_comment_path(article_id:@article.id,id:comment.id) %>
+        </li>
+    <%end%>
+<%end %>
+
+<li><%= link_to "Edit", edit_article_path(@article) %></li>
+<li><%= link_to "Destroy", article_path(@article), data: {turbo: true,turbo_method: :delete,turbo_confirm: "Are you sure?"}  %></li>
+<li><%= link_to "Add Comment", new_article_comment_path(@article) %></li>
